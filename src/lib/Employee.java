@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Employee {
 
+
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -15,11 +16,12 @@ public class Employee {
 	
 	private int yearJoined;
 	private int monthJoined;
-	private int dayJoined;
+	private  int dayJoined;// ganti  jadi localdate dari string ke tanggal
 	private int monthWorkingInYear;
+
 	
 	private boolean isForeigner;
-	private boolean gender; //true = Laki-laki, false = Perempuan
+	private boolean gender; // ganti menjadi  enum dari string ke enum
 	
 	private int monthlySalary;
 	private int otherMonthlyIncome;
@@ -31,7 +33,7 @@ public class Employee {
 	private List<String> childNames;
 	private List<String> childIdNumbers;
 	
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
+	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, Boolean gender) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -52,24 +54,21 @@ public class Employee {
 	 * Jika pegawai adalah warga negara asing gaji bulanan diperbesar sebanyak 50%
 	 */
 	
-	public void setMonthlySalary(int grade) {	
-		if (grade == 1) {
-			monthlySalary = 3000000;
-			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
-			}
-		}else if (grade == 2) {
-			monthlySalary = 5000000;
-			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
-			}
-		}else if (grade == 3) {
-			monthlySalary = 7000000;
-			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
-			}
+	public void setMonthlySalary(int grade) {   
+		switch (grade) {
+			case 1:
+				monthlySalary = isForeigner ? 4500000 : 3000000;
+				break;
+			case 2:
+				monthlySalary = isForeigner ? 7500000 : 5000000;
+				break;
+			case 3:
+				monthlySalary = isForeigner ? 10500000 : 7000000;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid grade");
 		}
-	}
+	}// Sederhanakan logika dalam method setMonthlySalary dan eliminasi duplikasi.
 	
 	public void setAnnualDeductible(int deductible) {	
 		this.annualDeductible = deductible;
