@@ -16,7 +16,7 @@ public class Employee {
     private boolean gender;
 
     private FamilyMember spouse;
-    private List<FamilyMember> children;
+    private List<FamilyMember> childrenList;
     private EmploymentRecord employmentRecord;
     private Salary salaryDetails;
 
@@ -30,7 +30,7 @@ public class Employee {
         this.isForeigner = isForeigner;
         this.gender = gender;
         this.salaryDetails = salaryDetails;
-        this.children = new LinkedList<>();
+        this.childrenList = new LinkedList<>();
     }
 
     public void setMonthlySalary(int grade) {
@@ -50,7 +50,7 @@ public class Employee {
     }
 
     public void addChild(String childName, String childIdNumber) {
-        children.add(new FamilyMember(childName, childIdNumber));
+        childrenList.add(new FamilyMember(childName, childIdNumber));
     }
 
     public void setEmploymentRecord(LocalDate startDate) {
@@ -77,7 +77,7 @@ public class Employee {
     }
 
     private int getChildCount() {
-        return children.size();
+        return childrenList.size();
     }
 
 	private boolean getIsForeigner(){
