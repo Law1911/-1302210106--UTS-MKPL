@@ -2,34 +2,21 @@ package lib;
 
 public class TaxCalculator {
 
-    public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int monthWorkingInYear, int annualDeductible, boolean isMarried, int childCount) {
-        // Menghitung total pendapatan tahunan (gaji bulanan x 12)
+    public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int monthWorkingInYear, boolean isMarried, int childCount) {
+        // Menghitung total pendapatan tahunan (gaji bulanan x jumlah bulan bekerja)
         int annualIncome = (monthlySalary + otherMonthlyIncome) * monthWorkingInYear;
 
-        // Mengurangkan jumlah potongan tahunan
-        annualIncome -= annualDeductible;
-
-        // Menentukan tarif pajak berdasarkan pendapatan tahunan
-        double taxRate;
-        if (annualIncome <= 50000000) {
-            taxRate = 0.05;
-        } else if (annualIncome <= 250000000) {
-            taxRate = 0.15;
-        } else {
-            taxRate = 0.25;
-        }
-
-        // Mengurangkan jumlah potongan tambahan untuk pasangan dan anak
+        // Menentukan penghasilan tidak kena pajak
+        int taxExemption = 54000000; // Penghasilan tidak kena pajak awal
         if (isMarried) {
-            annualIncome -= 50000000;
+            taxExemption += 4500000; // Tambahan untuk pasangan
         }
-        annualIncome -= childCount * 25000000;
+        taxExemption += Math.min(childCount, 3) * 4500000; // Tambahan untuk anak (maksimal 3 anak)
 
-        // Menghitung pajak berdasarkan tarif dan pendapatan tahunan setelah potongan
-        double tax = annualIncome * taxRate;
+        // Menghitung pajak berdasarkan penghasilan bersih setelah pengurangan penghasilan tidak kena pajak
+        double tax = (annualIncome - taxExemption) * 0.05; // Tarif pajak 5%
 
         // Mengembalikan nilai pajak bulanan
         return (int) (tax / 12);
     }
 }
-
