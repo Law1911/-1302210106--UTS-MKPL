@@ -1,3 +1,4 @@
+
 package lib;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -14,15 +15,12 @@ public class Employee {
     private boolean isForeigner;
     private boolean gender;
 
-    private int monthlySalary;
-    private int otherMonthlyIncome;
-    private int annualDeductible;
-
     private FamilyMember spouse;
     private List<FamilyMember> children;
     private EmploymentRecord employmentRecord;
+    private Salary salaryDetails;
 
-    public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, LocalDate dateJoined, boolean isForeigner, boolean gender) {
+    public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, LocalDate dateJoined, boolean isForeigner, boolean gender, Salary salaryDetails) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,29 +29,20 @@ public class Employee {
         this.dateJoined = dateJoined;
         this.isForeigner = isForeigner;
         this.gender = gender;
+        this.salaryDetails = salaryDetails;
         this.children = new LinkedList<>();
     }
 
     public void setMonthlySalary(int grade) {
-        if (grade == 1) {
-            monthlySalary = 3000000;
-        } else if (grade == 2) {
-            monthlySalary = 5000000;
-        } else if (grade == 3) {
-            monthlySalary = 7000000;
-        }
-
-        if (isForeigner) {
-            monthlySalary *= 1.5;
-        }
+        salaryDetails.setMonthlySalary(grade, isForeigner);
     }
 
     public void setAnnualDeductible(int deductible) {
-        this.annualDeductible = deductible;
+        salaryDetails.setAnnualDeductible(deductible);
     }
 
     public void setAdditionalIncome(int income) {
-        this.otherMonthlyIncome = income;
+        salaryDetails.setOtherMonthlyIncome(income);
     }
 
     public void setSpouse(String spouseName, String spouseIdNumber) {
@@ -70,7 +59,7 @@ public class Employee {
 
     public int getAnnualIncomeTax() {
         int monthWorkingInYear = calculateMonthWorkingInYear();
-        return TaxCalculator.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, isMarried(), getChildCount());
+        return TaxCalculator.calculateTax(salaryDetails.getMonthlySalary(), salaryDetails.getOtherMonthlyIncome(), monthWorkingInYear, salaryDetails.getAnnualDeductible(), isMarried(), getChildCount());
     }
 
     private int calculateMonthWorkingInYear() {
@@ -89,4 +78,8 @@ public class Employee {
     private int getChildCount() {
         return children.size();
     }
+
+	private boolean getIsForeigner(){
+		return isForeigner;
+	}
 }
