@@ -6,4 +6,4 @@ Melakukan refactoring code yang memiliki bahasa java. disini saya mencari code y
 branch dari repo saya dengan format nama Jenisbadsmells-lokasibadsemlls.
 
 berikut adalah referensi yang saya pakai untuk mengerjakan tugas ini 
-referensi = [https://refactoring.guru/refactoring/smells]([url](https://refactoring.guru/refactoring/smells))
+referensi = ([url](https://refactoring.guru/refactoring/smells))
